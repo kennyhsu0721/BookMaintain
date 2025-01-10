@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { Prev } from "react-bootstrap/esm/PageItem";
 import Book from "./Book";
 import bookClassData from "./data/book-class-data";
 import bookData from "./data/book-data";
-import { alignPropType } from "react-bootstrap/esm/types";
 
 const BookMaintain = () => {
 
   const [vm, setInputValue] = useState(new Book());
   const [bookDataFromLocalStorage, setGridData] = useState([]);
+  const [filterData,setFilterData]=useState([]);
+  
   const [pageState, setPageState] = useState("Query");
 
-  const handleChange = (e) => {
+  const handleFormValueChange = (e) => {
     const value = e.target.value;
     const modelfield = e.target.dataset.field;
 
@@ -23,7 +23,6 @@ const BookMaintain = () => {
 
   const handleShowBookForm = (e) => {
     //setBookFormVisible(!showBookForm);
-    debugger;
     setPageState("Insert");
   }
 
@@ -39,6 +38,7 @@ const BookMaintain = () => {
     }];
 
     setGridData([...temp, ...bookDataFromLocalStorage]);
+    setFilterData([...temp,...bookDataFromLocalStorage]);
     setInputValue(new Book());
 
     alert("新增成功");
@@ -46,7 +46,6 @@ const BookMaintain = () => {
 
   const handleDelete=(e)=>{
     e.preventDefault();
-
 
     if(window.confirm("確認刪除")){
       const bookId=e.target.parentElement.
@@ -57,6 +56,7 @@ const BookMaintain = () => {
         bookDataFromLocalStorage.findIndex(m=>m.BookId==bookId),1
       )
       setGridData([...bookDataFromLocalStorage]);
+      setFilterData([...bookDataFromLocalStorage]);
     }
   }
 
@@ -65,7 +65,17 @@ const BookMaintain = () => {
     e.preventDefault();
 
     const searchText=e.target.value;
-    //alert(searchText);
+
+    const filterResult=bookDataFromLocalStorage.filter(m=>
+      m.BookId==searchText ||
+      m.BookName.includes(searchText) ||
+      m.BookClassName==searchText ||
+      m.BookBoughtDate==searchText ||
+      m.BookAuthor.includes(searchText) ||
+      searchText==""
+    );
+        
+      setFilterData(filterResult);
 
   }
 
@@ -76,6 +86,7 @@ const BookMaintain = () => {
       temp = bookData;
       localStorage.setItem("bookData", JSON.stringify(temp));
     }
+    setFilterData(temp);
     setGridData(temp);
   }
 
@@ -83,6 +94,7 @@ const BookMaintain = () => {
     loadBookData();
   }, [])
 
+ 
   useEffect(() => {
     localStorage.setItem("bookData", JSON.stringify(bookDataFromLocalStorage));
   }, [bookDataFromLocalStorage]);
@@ -100,7 +112,7 @@ const BookMaintain = () => {
               </li>
               <li>
                 <label>圖書類別</label>
-                <select id="book_class" className="form-select" style={{ width: "100%" }} data-field="bookClassId" onChange={handleChange}
+                <select id="book_class" className="form-select" style={{ width: "100%" }} data-field="bookClassId" onChange={handleFormValueChange}
                   value={vm.bookClassId || ""} >
                   <option>請選擇</option>
                   {
@@ -112,15 +124,15 @@ const BookMaintain = () => {
               </li>
               <li>
                 <label>書名</label>
-                <input id="book_name" type="text" className="form-control" style={{ width: "100%" }} data-field="bookName" onChange={handleChange} value={vm.bookName || ""} />
+                <input id="book_name" type="text" className="form-control" style={{ width: "100%" }} data-field="bookName" onChange={handleFormValueChange} value={vm.bookName || ""} />
               </li>
               <li>
                 <label>作者</label>
-                <input id="book_author" type="text" className="form-control" style={{ width: "100%" }} data-field="bookAuthor" onChange={handleChange} value={vm.bookAuthor || ""} />
+                <input id="book_author" type="text" className="form-control" style={{ width: "100%" }} data-field="bookAuthor" onChange={handleFormValueChange} value={vm.bookAuthor || ""} />
               </li>
               <li>
                 <label>購買日期</label>
-                <input id="bought_datepicker" className="form-control" type='date' title="datepicker" style={{ width: "100%" }} data-field="bookBoughtDate" onChange={handleChange} value={vm.bookBoughtDate || ""} />
+                <input id="bought_datepicker" className="form-control" type='date' title="datepicker" style={{ width: "100%" }} data-field="bookBoughtDate" onChange={handleFormValueChange} value={vm.bookBoughtDate || ""} />
               </li>
               <li className="uk-text-right">
                 <button className="btn btn-outline-primary" onClick={handleInsertBook}>新增</button>
@@ -156,7 +168,7 @@ const BookMaintain = () => {
                 </thead>
                 <tbody>
                   {
-                    bookDataFromLocalStorage.map(element => {
+                    (filterData.length!=0?filterData:bookDataFromLocalStorage).map(element => {
                       return (
                         <tr key={"tr" + element.BookId}>
                           <td style={{ textAlign: "center" }}>{element.BookId}</td>

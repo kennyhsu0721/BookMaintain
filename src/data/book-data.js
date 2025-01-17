@@ -1,651 +1,651 @@
 const bookData=[
     {
-        "BookId": 1,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "DB2:Maximizing Performance of Online Production Systems",
-        "BookAuthor": "W.H.Inmon",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 2,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "精通SQL Server 7.0資料庫系統",
-        "BookAuthor": "方盈",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "零壹"
-    },
-    {
-        "BookId": 3,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "DB2 Answers! Certified Tech Support",
-        "BookAuthor": "Richard Yevich",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "WESLEY"
-    },
-    {
-        "BookId": 4,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "Data Mining Adriaans Zantinge",
-        "BookAuthor": "addison",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "全華"
-    },
-    {
-        "BookId": 5,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "Data Mining A hands-On Approach Business Professionals",
-        "BookAuthor": "Robert Groth",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "學貫行銷股份有限公司"
-    },
-    {
-        "BookId": 6,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "資料庫系統原理",
-        "BookAuthor": "陳玄玲譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "GSS"
-    },
-    {
-        "BookId": 7,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "Modern Database Systems",
-        "BookAuthor": "Won Kim",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Mc Graw Hill"
-    },
-    {
-        "BookId": 8,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "Oracle 8 資料庫技術指導手冊-2",
-        "BookAuthor": "Honour",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 9,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "DATA PREPARATION FOR DATA MINING",
-        "BookAuthor": "PYLE",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "維科"
-    },
-    {
-        "BookId": 10,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "SQL IN A NUTSHELL",
-        "BookAuthor": "KLINE",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 11,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "DATA MINING",
-        "BookAuthor": "Adriaans",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "維科"
-    },
-    {
-        "BookId": 12,
-        "BookClassId": "database",
-        "BookClassName": "資料庫",
-        "BookName": "DATABASE TUNING A Priucipled Approach",
-        "BookAuthor": "Dennis E. Shasha",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "大秦出版社"
-    },
-    {
-        "BookId": 13,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "Apache Server 徹底研究",
-        "BookAuthor": "陳建勳",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "經濟部中小企業"
-    },
-    {
-        "BookId": 14,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "Linux iptables技術實務--防火牆.寬頻管理.連線管制",
-        "BookAuthor": "施威銘研究室",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "碁峰"
-    },
-    {
-        "BookId": 15,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "TCP/IP網路管理",
-        "BookAuthor": "Craig Hunt",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Addison Wesley"
-    },
-    {
-        "BookId": 16,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "資訊架構學-網站應用",
-        "BookAuthor": "陳建勳譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Addison Wesley"
-    },
-    {
-        "BookId": 17,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "設計好網站的黃金準則",
-        "BookAuthor": "張亮譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "O'Reilly"
-    },
-    {
-        "BookId": 18,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "Integrated Broadband Networks",
-        "BookAuthor": "HANDEL & HUBER",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "商周"
-    },
-    {
-        "BookId": 19,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "微軟網路百科全書 第二版",
-        "BookAuthor": "Mitch Tulloch",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "全華圖書"
-    },
-    {
-        "BookId": 20,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "Writing Business Proposals",
-        "BookAuthor": "Richard  C. Freed",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "巨擘"
-    },
-    {
-        "BookId": 21,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "CARRIER GRADE VOICE OVER IP",
-        "BookAuthor": "DANIEL COLLINS",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "和碩"
-    },
-    {
-        "BookId": 22,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "TCP/IP SOCKETS IN C#",
-        "BookAuthor": "David D. Makofske",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "博碩"
-    },
-    {
-        "BookId": 23,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "Implementing Virtual Private Networks",
-        "BookAuthor": "Steven Brown",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "工研院"
-    },
-    {
-        "BookId": 24,
-        "BookClassId": "internet",
-        "BookClassName": "網際網路",
-        "BookName": "C#.NET網際網路程式設計",
-        "BookAuthor": "黃嘉輝",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 25,
-        "BookClassId": "system",
-        "BookClassName": "應用系統整合",
-        "BookName": "捷運工程之監控及數據採集系統設計對策",
-        "BookAuthor": "祝懷吉.林明正",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "工研院"
-    },
-    {
-        "BookId": 26,
-        "BookClassId": "system",
-        "BookClassName": "應用系統整合",
-        "BookName": "Crystal Reports 10整合實戰應用",
-        "BookAuthor": "鄒光宗",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "工研院"
-    },
-    {
-        "BookId": 27,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "兒童讀經教育",
-        "BookAuthor": "王財貴",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "軟協"
-    },
-    {
-        "BookId": 28,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "灼燙傷手冊",
-        "BookAuthor": "馬偕醫院",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "軟協"
-    },
-    {
-        "BookId": 29,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "如何保健自己",
-        "BookAuthor": "鐘文出版社",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "軟協"
-    },
-    {
-        "BookId": 30,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "怎樣保護自己",
-        "BookAuthor": "張青史",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "PTR/PH"
-    },
-    {
-        "BookId": 31,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "您的家庭醫師--兒童篇",
-        "BookAuthor": "瓦爾曼",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 32,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "您的家庭醫師-女性篇",
-        "BookAuthor": "瓦爾曼",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "PTR/PH"
-    },
-    {
-        "BookId": 33,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "您的家庭醫師-男性篇",
-        "BookAuthor": "瓦爾曼",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "PTR/PH"
-    },
-    {
-        "BookId": 34,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "不要小看兒童疼痛",
-        "BookAuthor": "瓦爾曼",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "經濟部中小企業"
-    },
-    {
-        "BookId": 35,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "認識成人預防保健",
-        "BookAuthor": "中央健康保險局",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "天瓏"
-    },
-    {
-        "BookId": 36,
-        "BookClassId": "home",
-        "BookClassName": "家庭保健",
-        "BookName": "健康小百科",
-        "BookAuthor": "梅約醫學中心",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "博碩"
-    },
-    {
-        "BookId": 37,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "聖殿祭司的ASP .NET 2.0專家技術手冊-使用C#-2",
-        "BookAuthor": "奚江華",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "桂冠圖書"
-    },
-    {
-        "BookId": 38,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "UML系統分析與設計",
-        "BookAuthor": "游峰碩",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "金融中心"
-    },
-    {
-        "BookId": 39,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "Enterprise Java Programming with IBM WebSphere",
-        "BookAuthor": "Brown, Graig.....",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Microsoft"
-    },
-    {
-        "BookId": 40,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "Visual Basic 6.0資料庫程式設計",
-        "BookAuthor": "王國榮",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "內政部"
-    },
-    {
-        "BookId": 41,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "實用JAVA樣式",
-        "BookAuthor": "彭仁松譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "東華"
-    },
-    {
-        "BookId": 42,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "深入淺出軟體開發",
-        "BookAuthor": "楊仁和編譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 43,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "深入淺出C#",
-        "BookAuthor": "楊仁和編譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "GSS"
-    },
-    {
-        "BookId": 44,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "Flex +Air 程式開發",
-        "BookAuthor": "宋志峰著",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "McGraw-Hill"
-    },
-    {
-        "BookId": 45,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "SQL Server 2008 SSIS整合服務",
-        "BookAuthor": "胡百敬，姚巧玫著",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "McGraw-Hill"
-    },
-    {
-        "BookId": 46,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "重構-改善既有程式的設計 第二版",
-        "BookAuthor": "侯捷/熊節譯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 47,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "物件導向-系統分析設計與實作",
-        "BookAuthor": "東海林",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Meghan-Kiffer Press"
-    },
-    {
-        "BookId": 48,
-        "BookClassId": "language",
-        "BookClassName": "語言",
-        "BookName": "Java 2全方位學習  J2SE 5.0增修版",
-        "BookAuthor": "朱仲傑",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "QUE E&T"
-    },
-    {
-        "BookId": 49,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "專案經理的教戰守則-成功PM的18項修練#1",
-        "BookAuthor": "熊培霖",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "MC GRAW HILL"
-    },
-    {
-        "BookId": 50,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "企管大師報到---創造管理的五十位思想家",
-        "BookAuthor": "科雷納",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 51,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "我懂了,專案管理",
-        "BookAuthor": "James P. Lewis",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "長諾"
-    },
-    {
-        "BookId": 52,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "改變企業經營體質--訓練與發展",
-        "BookAuthor": "李長貴",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "碁峰"
-    },
-    {
-        "BookId": 53,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "2010創業勝經 創業楷模奮鬥故事",
-        "BookAuthor": "中國青年創業協會總會",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Addison Wesley"
-    },
-    {
-        "BookId": 54,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "Inside Intel--英特爾三十年風雲",
-        "BookAuthor": "堤姆.傑克遜",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 55,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "善用事業夥伴--電話",
-        "BookAuthor": "江淑芬",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "松格"
-    },
-    {
-        "BookId": 56,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "Mastering the Unpredictable#1",
-        "BookAuthor": "Keith D.Swenson",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "巨擘"
-    },
-    {
-        "BookId": 57,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "生產管理-上",
-        "BookAuthor": "趙山",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 58,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "The Power of VISION",
-        "BookAuthor": "Joel Arthur Barker",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "GSS"
-    },
-    {
-        "BookId": 59,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "一對一經理人(e世代成功的顧客關係管理)",
-        "BookAuthor": "唐.派普/瑪莎.羅傑斯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 60,
-        "BookClassId": "management",
-        "BookClassName": "管理",
-        "BookName": "企業績效管理",
-        "BookAuthor": "GSS",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "GSS"
-    },
-    {
-        "BookId": 61,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "Strategic and  Competitive Analysis",
-        "BookAuthor": "Craig S Fleisher, Babette E Be",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "創創公司"
-    },
-    {
-        "BookId": 62,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "綠色企業",
-        "BookAuthor": "John Davis",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "三民書局"
-    },
-    {
-        "BookId": 63,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "THE MISSION STATEMENT BOOK",
-        "BookAuthor": "Jeffrey Abrahams",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "讀品文化"
-    },
-    {
-        "BookId": 64,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "BUSINESS PROPOSALS",
-        "BookAuthor": "TOM SANT",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "Addison_Wesley"
-    },
-    {
-        "BookId": 66,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "科技頑童沃茲尼克",
-        "BookAuthor": "沃茲尼克,史密斯",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "全球智慧文化"
-    },
-    {
-        "BookId": 65,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "天下1000大企業光碟片--2005旗艦版光碟片",
-        "BookAuthor": "天下雜誌",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "聯輔中心"
-    },
-    {
-        "BookId": 67,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "這樣想，就對了",
-        "BookAuthor": "林有田",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "憲業企管"
-    },
-    {
-        "BookId": 68,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "無體行銷",
-        "BookAuthor": "Beckwith",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "聯輔中心"
-    },
-    {
-        "BookId": 69,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "成交--贏得顧客心的對談式銷售法",
-        "BookAuthor": "琳達里查察森",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "聯輔中心"
-    },
-    {
-        "BookId": 71,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "雲端策略",
-        "BookAuthor": "陳瀅等著",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "經濟部"
-    },
-    {
-        "BookId": 70,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "雲端運算投資攻略",
-        "BookAuthor": "Steve Waterhouse",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "中國生產力"
-    },
-    {
-        "BookId": 72,
-        "BookClassId": "marketing",
-        "BookClassName": "行銷",
-        "BookName": "團隊銷售無往不利",
-        "BookAuthor": "Steve Waterhouse",
-        "BookBoughtDate": "1990-06-18",
-        "BookPublisher": "華泰"
+        "bookId": 1,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "DB2:Maximizing Performance of Online Production Systems",
+        "bookAuthor": "W.H.Inmon",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 2,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "精通SQL Server 7.0資料庫系統",
+        "bookAuthor": "方盈",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "零壹"
+    },
+    {
+        "bookId": 3,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "DB2 Answers! Certified Tech Support",
+        "bookAuthor": "Richard Yevich",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "WESLEY"
+    },
+    {
+        "bookId": 4,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "Data Mining Adriaans Zantinge",
+        "bookAuthor": "addison",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "全華"
+    },
+    {
+        "bookId": 5,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "Data Mining A hands-On Approach Business Professionals",
+        "bookAuthor": "Robert Groth",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "學貫行銷股份有限公司"
+    },
+    {
+        "bookId": 6,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "資料庫系統原理",
+        "bookAuthor": "陳玄玲譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "GSS"
+    },
+    {
+        "bookId": 7,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "Modern Database Systems",
+        "bookAuthor": "Won Kim",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Mc Graw Hill"
+    },
+    {
+        "bookId": 8,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "Oracle 8 資料庫技術指導手冊-2",
+        "bookAuthor": "Honour",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 9,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "DATA PREPARATION FOR DATA MINING",
+        "bookAuthor": "PYLE",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "維科"
+    },
+    {
+        "bookId": 10,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "SQL IN A NUTSHELL",
+        "bookAuthor": "KLINE",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 11,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "DATA MINING",
+        "bookAuthor": "Adriaans",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "維科"
+    },
+    {
+        "bookId": 12,
+        "bookClassId": "database",
+        "bookClassName": "資料庫",
+        "bookName": "DATABASE TUNING A Priucipled Approach",
+        "bookAuthor": "Dennis E. Shasha",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "大秦出版社"
+    },
+    {
+        "bookId": 13,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "Apache Server 徹底研究",
+        "bookAuthor": "陳建勳",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "經濟部中小企業"
+    },
+    {
+        "bookId": 14,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "Linux iptables技術實務--防火牆.寬頻管理.連線管制",
+        "bookAuthor": "施威銘研究室",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "碁峰"
+    },
+    {
+        "bookId": 15,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "TCP/IP網路管理",
+        "bookAuthor": "Craig Hunt",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Addison Wesley"
+    },
+    {
+        "bookId": 16,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "資訊架構學-網站應用",
+        "bookAuthor": "陳建勳譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Addison Wesley"
+    },
+    {
+        "bookId": 17,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "設計好網站的黃金準則",
+        "bookAuthor": "張亮譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "O'Reilly"
+    },
+    {
+        "bookId": 18,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "Integrated Broadband Networks",
+        "bookAuthor": "HANDEL & HUBER",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "商周"
+    },
+    {
+        "bookId": 19,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "微軟網路百科全書 第二版",
+        "bookAuthor": "Mitch Tulloch",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "全華圖書"
+    },
+    {
+        "bookId": 20,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "Writing Business Proposals",
+        "bookAuthor": "Richard  C. Freed",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "巨擘"
+    },
+    {
+        "bookId": 21,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "CARRIER GRADE VOICE OVER IP",
+        "bookAuthor": "DANIEL COLLINS",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "和碩"
+    },
+    {
+        "bookId": 22,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "TCP/IP SOCKETS IN C#",
+        "bookAuthor": "David D. Makofske",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "博碩"
+    },
+    {
+        "bookId": 23,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "Implementing Virtual Private Networks",
+        "bookAuthor": "Steven Brown",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "工研院"
+    },
+    {
+        "bookId": 24,
+        "bookClassId": "internet",
+        "bookClassName": "網際網路",
+        "bookName": "C#.NET網際網路程式設計",
+        "bookAuthor": "黃嘉輝",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 25,
+        "bookClassId": "system",
+        "bookClassName": "應用系統整合",
+        "bookName": "捷運工程之監控及數據採集系統設計對策",
+        "bookAuthor": "祝懷吉.林明正",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "工研院"
+    },
+    {
+        "bookId": 26,
+        "bookClassId": "system",
+        "bookClassName": "應用系統整合",
+        "bookName": "Crystal Reports 10整合實戰應用",
+        "bookAuthor": "鄒光宗",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "工研院"
+    },
+    {
+        "bookId": 27,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "兒童讀經教育",
+        "bookAuthor": "王財貴",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "軟協"
+    },
+    {
+        "bookId": 28,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "灼燙傷手冊",
+        "bookAuthor": "馬偕醫院",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "軟協"
+    },
+    {
+        "bookId": 29,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "如何保健自己",
+        "bookAuthor": "鐘文出版社",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "軟協"
+    },
+    {
+        "bookId": 30,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "怎樣保護自己",
+        "bookAuthor": "張青史",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "PTR/PH"
+    },
+    {
+        "bookId": 31,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "您的家庭醫師--兒童篇",
+        "bookAuthor": "瓦爾曼",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 32,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "您的家庭醫師-女性篇",
+        "bookAuthor": "瓦爾曼",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "PTR/PH"
+    },
+    {
+        "bookId": 33,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "您的家庭醫師-男性篇",
+        "bookAuthor": "瓦爾曼",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "PTR/PH"
+    },
+    {
+        "bookId": 34,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "不要小看兒童疼痛",
+        "bookAuthor": "瓦爾曼",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "經濟部中小企業"
+    },
+    {
+        "bookId": 35,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "認識成人預防保健",
+        "bookAuthor": "中央健康保險局",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "天瓏"
+    },
+    {
+        "bookId": 36,
+        "bookClassId": "home",
+        "bookClassName": "家庭保健",
+        "bookName": "健康小百科",
+        "bookAuthor": "梅約醫學中心",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "博碩"
+    },
+    {
+        "bookId": 37,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "聖殿祭司的ASP .NET 2.0專家技術手冊-使用C#-2",
+        "bookAuthor": "奚江華",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "桂冠圖書"
+    },
+    {
+        "bookId": 38,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "UML系統分析與設計",
+        "bookAuthor": "游峰碩",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "金融中心"
+    },
+    {
+        "bookId": 39,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "Enterprise Java Programming with IBM WebSphere",
+        "bookAuthor": "Brown, Graig.....",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Microsoft"
+    },
+    {
+        "bookId": 40,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "Visual Basic 6.0資料庫程式設計",
+        "bookAuthor": "王國榮",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "內政部"
+    },
+    {
+        "bookId": 41,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "實用JAVA樣式",
+        "bookAuthor": "彭仁松譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "東華"
+    },
+    {
+        "bookId": 42,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "深入淺出軟體開發",
+        "bookAuthor": "楊仁和編譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 43,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "深入淺出C#",
+        "bookAuthor": "楊仁和編譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "GSS"
+    },
+    {
+        "bookId": 44,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "Flex +Air 程式開發",
+        "bookAuthor": "宋志峰著",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "McGraw-Hill"
+    },
+    {
+        "bookId": 45,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "SQL Server 2008 SSIS整合服務",
+        "bookAuthor": "胡百敬，姚巧玫著",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "McGraw-Hill"
+    },
+    {
+        "bookId": 46,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "重構-改善既有程式的設計 第二版",
+        "bookAuthor": "侯捷/熊節譯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 47,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "物件導向-系統分析設計與實作",
+        "bookAuthor": "東海林",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Meghan-Kiffer Press"
+    },
+    {
+        "bookId": 48,
+        "bookClassId": "language",
+        "bookClassName": "語言",
+        "bookName": "Java 2全方位學習  J2SE 5.0增修版",
+        "bookAuthor": "朱仲傑",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "QUE E&T"
+    },
+    {
+        "bookId": 49,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "專案經理的教戰守則-成功PM的18項修練#1",
+        "bookAuthor": "熊培霖",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "MC GRAW HILL"
+    },
+    {
+        "bookId": 50,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "企管大師報到---創造管理的五十位思想家",
+        "bookAuthor": "科雷納",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 51,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "我懂了,專案管理",
+        "bookAuthor": "James P. Lewis",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "長諾"
+    },
+    {
+        "bookId": 52,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "改變企業經營體質--訓練與發展",
+        "bookAuthor": "李長貴",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "碁峰"
+    },
+    {
+        "bookId": 53,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "2010創業勝經 創業楷模奮鬥故事",
+        "bookAuthor": "中國青年創業協會總會",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Addison Wesley"
+    },
+    {
+        "bookId": 54,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "Inside Intel--英特爾三十年風雲",
+        "bookAuthor": "堤姆.傑克遜",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 55,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "善用事業夥伴--電話",
+        "bookAuthor": "江淑芬",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "松格"
+    },
+    {
+        "bookId": 56,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "Mastering the Unpredictable#1",
+        "bookAuthor": "Keith D.Swenson",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "巨擘"
+    },
+    {
+        "bookId": 57,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "生產管理-上",
+        "bookAuthor": "趙山",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 58,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "The Power of VISION",
+        "bookAuthor": "Joel Arthur Barker",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "GSS"
+    },
+    {
+        "bookId": 59,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "一對一經理人(e世代成功的顧客關係管理)",
+        "bookAuthor": "唐.派普/瑪莎.羅傑斯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 60,
+        "bookClassId": "management",
+        "bookClassName": "管理",
+        "bookName": "企業績效管理",
+        "bookAuthor": "GSS",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "GSS"
+    },
+    {
+        "bookId": 61,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "Strategic and  Competitive Analysis",
+        "bookAuthor": "Craig S Fleisher, Babette E Be",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "創創公司"
+    },
+    {
+        "bookId": 62,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "綠色企業",
+        "bookAuthor": "John Davis",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "三民書局"
+    },
+    {
+        "bookId": 63,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "THE MISSION STATEMENT BOOK",
+        "bookAuthor": "Jeffrey Abrahams",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "讀品文化"
+    },
+    {
+        "bookId": 64,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "BUSINESS PROPOSALS",
+        "bookAuthor": "TOM SANT",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "Addison_Wesley"
+    },
+    {
+        "bookId": 66,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "科技頑童沃茲尼克",
+        "bookAuthor": "沃茲尼克,史密斯",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "全球智慧文化"
+    },
+    {
+        "bookId": 65,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "天下1000大企業光碟片--2005旗艦版光碟片",
+        "bookAuthor": "天下雜誌",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "聯輔中心"
+    },
+    {
+        "bookId": 67,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "這樣想，就對了",
+        "bookAuthor": "林有田",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "憲業企管"
+    },
+    {
+        "bookId": 68,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "無體行銷",
+        "bookAuthor": "Beckwith",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "聯輔中心"
+    },
+    {
+        "bookId": 69,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "成交--贏得顧客心的對談式銷售法",
+        "bookAuthor": "琳達里查察森",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "聯輔中心"
+    },
+    {
+        "bookId": 71,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "雲端策略",
+        "bookAuthor": "陳瀅等著",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "經濟部"
+    },
+    {
+        "bookId": 70,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "雲端運算投資攻略",
+        "bookAuthor": "Steve Waterhouse",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "中國生產力"
+    },
+    {
+        "bookId": 72,
+        "bookClassId": "marketing",
+        "bookClassName": "行銷",
+        "bookName": "團隊銷售無往不利",
+        "bookAuthor": "Steve Waterhouse",
+        "bookBoughtDate": "1990-06-18",
+        "bookPublisher": "華泰"
     }
  ]
 

@@ -2,16 +2,22 @@ import { useState, useEffect } from "react";
 import Book from "./model/Book";
 import bookClassData from "./data/book-class-data";
 import bookData from "./data/book-data";
-import MaintainModel from "./model/MaintainModel";
 import BookSearchArg from './model/BookSearchArg';
+import BookGridData from "./model/BookGridData";
+import StandardMaintainVM from "./model/StandardMaintainVM";
 
 const BookMaintain = () => {
 
-  const [vm, setVMValue] = useState(
-    new MaintainModel(
-      new BookSearchArg(), [], new Book()));
+  // const [vm, setVMValue] = useState(
+  //   new MaintainModel(
+  //     new BookSearchArg(), [], new Book()));
 
-  const [filterData, setFilterData] = useState([]);
+  const [vm, setVMValue] = useState(
+    new StandardMaintainVM(
+      BookSearchArg, BookGridData, Book));
+
+  
+  const [filterData, setFilterData] = useState(null);
   const [pageState, setPageState] = useState("Query");
 
   /**
@@ -22,7 +28,6 @@ const BookMaintain = () => {
     const value = e.target.value;
     const modelfield = e.target.dataset.field;
     const anchor = e.target.closest("[data-anchor]").dataset.anchor;
-
     syncVMState(anchor, value, modelfield);
   }
 
@@ -41,17 +46,17 @@ const BookMaintain = () => {
    */
   const handleInsertBook = (e) => {
     const temp = [{
-      BookId: Math.max(...vm.gridData.map(m => m.BookId)) + 1,
-      BookName: vm.detail.bookName,
-      BookAuthor: vm.detail.bookAuthor,
-      BookClassId: vm.detail.bookClassId,
-      BookClassName: bookClassData.find(m => m.value == vm.detail.bookClassId).text,
-      BookBoughtDate: vm.detail.bookBoughtDate,
-      BookPublisher: vm.detail.BookPublisher
+      bookId: Math.max(...vm.gridData.rows.map(m => m.BookId)) + 1,
+      bookName: vm.detail.bookName,
+      bookAuthor: vm.detail.bookAuthor,
+      bookClassId: vm.detail.bookClassId,
+      bookClassName: bookClassData.find(m => m.value == vm.detail.bookClassId).text,
+      bookBoughtDate: vm.detail.bookBoughtDate,
+      bookPublisher: vm.detail.bookPublisher
     }];
 
-    setFilterData([...temp, ...vm.gridData]);
-    syncVMState("Grid", vm.gridData);
+    setFilterData([...temp, ...vm.gridData.rows]);
+    syncVMState("Grid", vm.gridData.rows,"rows");
 
     //新增成功後將畫面清空
     syncVMState("Default", new Book());
@@ -67,16 +72,12 @@ const BookMaintain = () => {
     e.preventDefault();
 
     if (window.confirm("確認刪除")) {
-      const bookId = e.target.parentElement.
-        previousElementSibling.previousElementSibling.previousElementSibling.
-        previousElementSibling.previousElementSibling.innerText;
-
-      vm.gridData.splice(
-        vm.gridData.findIndex(m => m.BookId == bookId), 1
-      )
-
-      setFilterData([...vm.gridData]);
-      syncVMState("Grid", vm.gridData);
+      const bookId = getSeleteedBookId(e.target);
+      vm.gridData.rows.splice(
+        vm.gridData.rows.findIndex(m => m.bookId == bookId), 1
+      );
+      setFilterData([...vm.gridData.rows]);
+      syncVMState("Grid", vm.gridData.rows,"rows");
     }
   }
 
@@ -89,19 +90,45 @@ const BookMaintain = () => {
     e.preventDefault();
 
     const searchText = e.target.value;
-    const filterResult = vm.gridData.filter(m =>
-      m.BookId == searchText ||
-      m.BookName.includes(searchText) ||
-      m.BookClassName == searchText ||
-      m.BookBoughtDate == searchText ||
-      m.BookAuthor.includes(searchText) ||
+    const filterResult = vm.gridData.rows.filter(m =>
+      m.bookId == searchText ||
+      m.bookName.includes(searchText) ||
+      m.bookClassName == searchText ||
+      m.bookBoughtDate == searchText ||
+      m.bookAuthor.includes(searchText) ||
       searchText == ""
     );
-
     setFilterData(filterResult);
 
   }
 
+  const handleShowEdit = (e) => {
+    e.preventDefault();
+
+    setPageState("Insert");
+    const bookId = getSeleteedBookId(e.target);
+    const tempBook = vm.gridData.rows.find(m => m.bookId == bookId);
+
+    const temp = {
+      bookId: bookId,
+      bookName: tempBook.bookName,
+      bookAuthor: tempBook.bookAuthor,
+      bookClassId: tempBook.bookClassId,
+      bookBoughtDate: tempBook.bookBoughtDate,
+      bookPublisher: tempBook.bookPublisher
+    }
+    syncVMState("Detail", temp);
+
+  }
+
+  const getSeleteedBookId = (target) => {
+
+    const bookId = target.parentElement.
+      previousElementSibling.previousElementSibling.previousElementSibling.
+      previousElementSibling.previousElementSibling.innerText;
+
+    return bookId;
+  }
   /**
    * 讀取預設資料
    */
@@ -112,8 +139,10 @@ const BookMaintain = () => {
       temp = bookData;
       localStorage.setItem("bookData", JSON.stringify(temp));
     }
+    
     setFilterData(temp);
-    syncVMState("Grid", temp)
+    syncVMState("Grid", temp,"rows")
+
   }
 
   /**
@@ -123,36 +152,59 @@ const BookMaintain = () => {
    * @param {*} modelfield 
    */
   const syncVMState = (anchor, data, modelfield) => {
-
+    
     switch (anchor) {
       case "Default":
         setVMValue((prevvm) => ({
           ...prevvm,
-          detail: data
+          detialData: data
         }));
       case "Detail":
-        setVMValue((prevvm) => ({
-          ...prevvm,
-          detail: {
-            ...prevvm.detail,
-            [modelfield]: data
-          }
-        }));
+        if (modelfield!=undefined) {
+          setVMValue((prevvm) => ({
+            ...prevvm,
+            detialData: {
+              ...prevvm.detail,
+              [modelfield]: data
+            }
+          }));
+        } else {//如果沒有指定欄位就全蓋
+          setVMValue((prevvm) => ({
+            ...prevvm,
+            detialData: data
+          }));
+        }
         break;
       case "Query":
         setVMValue((prevvm) => ({
           ...prevvm,
-          searchArg: {
-            ...prevvm.searchArg,
+          filterArg: {
+            ...prevvm.filterArg,
             [modelfield]: data
           }
         }));
         break;
       case "Grid":
-        setVMValue((prevvm) => ({
-          ...prevvm,
-          gridData: data
-        }));
+
+        if(modelfield!=undefined){
+          setVMValue((prevvm) => ({
+            ...prevvm,
+            gridData:{
+              ...prevvm.gridData,
+              ["rows"]:data
+            }
+          }));
+          
+        }else{
+          setVMValue((prevvm) => ({
+            ...prevvm,
+            gridData: data
+          }));
+          //alert(2)
+          console.log(modelfield);
+        }
+
+
         break;
       default:
         break;
@@ -172,7 +224,8 @@ const BookMaintain = () => {
    * 當 Grid Data 更新時、處理 localStorage
    */
   useEffect(() => {
-    localStorage.setItem("bookData", JSON.stringify(vm.gridData));
+    
+    localStorage.setItem("bookData", JSON.stringify(vm.gridData.rows));
   }, [vm.gridData]);
 
 
@@ -191,7 +244,7 @@ const BookMaintain = () => {
                 <label>圖書類別</label>
                 <select id="book_class"
                   className="form-select" style={{ width: "100%" }} data-field="bookClassId" onChange={handleVMValueChange}
-                  value={vm.detail.bookClassId || ""} >
+                  value={vm.detialData.bookClassId || ""} >
                   <option>請選擇</option>
                   {
                     bookClassData.map(element => {
@@ -202,15 +255,15 @@ const BookMaintain = () => {
               </li>
               <li>
                 <label>書名</label>
-                <input id="book_name" type="text" className="form-control" style={{ width: "100%" }} data-field="bookName" onChange={handleVMValueChange} value={vm.detail.bookName || ""} />
+                <input id="book_name" type="text" className="form-control" style={{ width: "100%" }} data-field="bookName" onChange={handleVMValueChange} value={vm.detialData.bookName || ""} />
               </li>
               <li>
                 <label>作者</label>
-                <input id="book_author" type="text" className="form-control" style={{ width: "100%" }} data-field="bookAuthor" onChange={handleVMValueChange} value={vm.detail.bookAuthor || ""} />
+                <input id="book_author" type="text" className="form-control" style={{ width: "100%" }} data-field="bookAuthor" onChange={handleVMValueChange} value={vm.detialData.bookAuthor || ""} />
               </li>
               <li>
                 <label>購買日期</label>
-                <input id="bought_datepicker" className="form-control" type='date' title="datepicker" style={{ width: "100%" }} data-field="bookBoughtDate" onChange={handleVMValueChange} value={vm.detail.bookBoughtDate || ""} />
+                <input id="bought_datepicker" className="form-control" type='date' title="datepicker" style={{ width: "100%" }} data-field="bookBoughtDate" onChange={handleVMValueChange} value={vm.detialData.bookBoughtDate || ""} />
               </li>
               <li className="uk-text-right">
                 <button className="btn btn-outline-primary" onClick={handleInsertBook}>新增</button>
@@ -229,7 +282,7 @@ const BookMaintain = () => {
                 <button id="btn-show-add-book" className="btn btn-outline-primary" onClick={handleShowBookForm}>新增書籍</button>
               </div>
               <div className="mb-3">
-                <input className="form-control" placeholder="請輸入查詢條件..." data-field="bookName" onChange={handleVMValueChange} onInput={handleFilter} value={vm.searchArg.bookName || ""}></input>
+                <input className="form-control" placeholder="請輸入查詢條件..." data-field="bookName" onChange={handleVMValueChange} onInput={handleFilter} value={vm.filterArg.bookName || ""}></input>
               </div>
             </div>
             <div data-anchor="grid">
@@ -247,15 +300,18 @@ const BookMaintain = () => {
                   </thead>
                   <tbody>
                     {
-                      (filterData.length != 0 ? filterData : vm.gridData).map(element => {
+                      (filterData != null ? filterData : vm.gridData.rows).map(element => {
                         return (
-                          <tr key={"tr" + element.BookId}>
-                            <td style={{ textAlign: "center" }}>{element.BookId}</td>
-                            <td>{element.BookName}</td>
-                            <td>{element.BookClassName}</td>
-                            <td>{element.BookAuthor}</td>
-                            <td style={{ textAlign: "center" }}>{element.BookBoughtDate}</td>
-                            <td style={{ textAlign: "center" }}><a src="#" className="btn btn-outline-primary" onClick={handleDelete}>刪除</a></td>
+                          <tr key={"tr" + element.bookId}>
+                            <td style={{ textAlign: "center" }}>{element.bookId}</td>
+                            <td>{element.bookName}</td>
+                            <td>{element.bookClassName}</td>
+                            <td>{element.bookAuthor}</td>
+                            <td style={{ textAlign: "center" }}>{element.bookBoughtDate}</td>
+                            <td style={{ textAlign: "center" }}>
+                              <a src="#" className="btn btn-outline-primary mx-1" onClick={handleDelete}>刪除</a>
+                              <a src="#" className="btn btn-outline-primary mx-1" onClick={handleShowEdit}>編輯</a>
+                            </td>
                           </tr>);
                       })
                     }

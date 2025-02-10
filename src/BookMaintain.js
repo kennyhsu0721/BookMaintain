@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Book from "./model/Book";
 import bookClassData from "./data/book-class-data";
 import bookData from "./data/book-data";
@@ -16,9 +16,39 @@ const BookMaintain = () => {
     new StandardMaintainVM(
       BookSearchArg, BookGridData, Book));
 
-  
+
   const [filterData, setFilterData] = useState(null);
-  const [pageState, setPageState] = useState("Query");
+  const [pageState, setPageState] = useState("Result");
+
+  const selectedKeyValue = useRef("");
+
+  const operations = [
+    {
+      "operationId": "Filter",
+      "operationName": "查詢",
+      "priority": "910"
+    },
+    {
+      "operationId": "Create",
+      "operationName": "新增",
+      "priority": "240"
+    },
+    {
+      "operationId": "Save",
+      "operationName": "存檔",
+      "priority": "210"
+    },
+    {
+      "operationId": "BackToPrevious",
+      "operationName": "回上一頁",
+      "priority": "200"
+    },
+    {
+      "operationId": "Clear",
+      "operationName": "清畫面",
+      "priority": "900"
+    },
+  ]
 
   /**
    * 處理使用者改變畫面資料
@@ -27,144 +57,54 @@ const BookMaintain = () => {
   const handleVMValueChange = (e) => {
     const value = e.target.value;
     const modelfield = e.target.dataset.field;
-    const anchor = e.target.closest("[data-anchor]").dataset.anchor;
-    syncVMState(anchor, value, modelfield);
+    if (pageState == "Result") {
+      syncVMValue("Filter", value, modelfield);
+    }
+    if (pageState == "Detial4Create" || pageState == "Detial4Modify") {
+      syncVMValue("Modify", value, modelfield);
+    }
+
   }
 
   /**
-   *
-   * 處理畫面新增區塊與 Gird 區塊的隱藏與顯示
-   * @param {*} e
-   */
-  const handleShowBookForm = (e) => {
-    setPageState("Insert");
-  }
-
-  /**
-   * 處理新增書籍
+   * Grid Row 點擊時設定 selectedKeyValue
    * @param {*} e 
    */
-  const handleInsertBook = (e) => {
-    const temp = [{
-      bookId: Math.max(...vm.gridData.rows.map(m => m.BookId)) + 1,
-      bookName: vm.detail.bookName,
-      bookAuthor: vm.detail.bookAuthor,
-      bookClassId: vm.detail.bookClassId,
-      bookClassName: bookClassData.find(m => m.value == vm.detail.bookClassId).text,
-      bookBoughtDate: vm.detail.bookBoughtDate,
-      bookPublisher: vm.detail.bookPublisher
-    }];
-
-    setFilterData([...temp, ...vm.gridData.rows]);
-    syncVMState("Grid", vm.gridData.rows,"rows");
-
-    //新增成功後將畫面清空
-    syncVMState("Default", new Book());
-    alert("新增成功");
-  }
-
-  /**
-   * 處理刪除書籍
-   *
-   * @param {*} e
-   */
-  const handleDelete = (e) => {
-    e.preventDefault();
-
-    if (window.confirm("確認刪除")) {
-      const bookId = getSeleteedBookId(e.target);
-      vm.gridData.rows.splice(
-        vm.gridData.rows.findIndex(m => m.bookId == bookId), 1
-      );
-      setFilterData([...vm.gridData.rows]);
-      syncVMState("Grid", vm.gridData.rows,"rows");
-    }
+  const handleRowClick = (e) => {
+    setselectedKeyValue(e.target);
   }
 
 
   /**
-   * 處理查詢書籍
-   * @param {*} e 
+   * 設定鍵值(Grid 被點選該筆的 Key Value)
+   * @param {*} target 
    */
-  const handleFilter = (e) => {
-    e.preventDefault();
-
-    const searchText = e.target.value;
-    const filterResult = vm.gridData.rows.filter(m =>
-      m.bookId == searchText ||
-      m.bookName.includes(searchText) ||
-      m.bookClassName == searchText ||
-      m.bookBoughtDate == searchText ||
-      m.bookAuthor.includes(searchText) ||
-      searchText == ""
-    );
-    setFilterData(filterResult);
-
+  const setselectedKeyValue = (target) => {
+    const selectedRow = target.closest("tr");
+    selectedKeyValue.current = selectedRow.querySelector("[data-keyfield]").value;
   }
-
-  const handleShowEdit = (e) => {
-    e.preventDefault();
-
-    setPageState("Insert");
-    const bookId = getSeleteedBookId(e.target);
-    const tempBook = vm.gridData.rows.find(m => m.bookId == bookId);
-
-    const temp = {
-      bookId: bookId,
-      bookName: tempBook.bookName,
-      bookAuthor: tempBook.bookAuthor,
-      bookClassId: tempBook.bookClassId,
-      bookBoughtDate: tempBook.bookBoughtDate,
-      bookPublisher: tempBook.bookPublisher
-    }
-    syncVMState("Detail", temp);
-
-  }
-
-  const getSeleteedBookId = (target) => {
-
-    const bookId = target.parentElement.
-      previousElementSibling.previousElementSibling.previousElementSibling.
-      previousElementSibling.previousElementSibling.innerText;
-
-    return bookId;
-  }
-  /**
-   * 讀取預設資料
-   */
-  const loadBookData = () => {
-    let temp = JSON.parse(localStorage.getItem("bookData"));
-
-    if (!temp) {
-      temp = bookData;
-      localStorage.setItem("bookData", JSON.stringify(temp));
-    }
-    
-    setFilterData(temp);
-    syncVMState("Grid", temp,"rows")
-
-  }
+ 
 
   /**
    * 更新頁面狀態
-   * @param {} anchor 
+   * @param {} operationId 
    * @param {*} data 
    * @param {*} modelfield 
    */
-  const syncVMState = (anchor, data, modelfield) => {
+  const syncVMValue = (operationId, data, modelfield) => {
     
-    switch (anchor) {
-      case "Default":
+    switch (operationId) {
+      case "Create":
         setVMValue((prevvm) => ({
           ...prevvm,
           detialData: data
         }));
-      case "Detail":
-        if (modelfield!=undefined) {
+      case "Modify":
+        if (modelfield != undefined) {
           setVMValue((prevvm) => ({
             ...prevvm,
             detialData: {
-              ...prevvm.detail,
+              ...prevvm.detialData,
               [modelfield]: data
             }
           }));
@@ -175,48 +115,384 @@ const BookMaintain = () => {
           }));
         }
         break;
-      case "Query":
+      case "Filter":
         setVMValue((prevvm) => ({
           ...prevvm,
           filterArg: {
-            ...prevvm.filterArg,
-            [modelfield]: data
+            arg: {
+              ...prevvm.filterArg.arg,
+              [modelfield]: data
+            }
           }
         }));
         break;
       case "Grid":
 
-        if(modelfield!=undefined){
+        if (modelfield != undefined) {
           setVMValue((prevvm) => ({
             ...prevvm,
-            gridData:{
+            gridData: {
               ...prevvm.gridData,
-              ["rows"]:data
+              [modelfield]: data
             }
           }));
-          
-        }else{
+        } else {
           setVMValue((prevvm) => ({
             ...prevvm,
             gridData: data
           }));
-          //alert(2)
-          console.log(modelfield);
         }
-
-
         break;
       default:
         break;
     }
+  }
 
+  const deleteData = () => {
+
+    const showDeleteConfirm = () => {
+      return new Promise((resolve, reject) => {
+        if (window.confirm("確認刪除")) {
+          resolve();
+        } else {
+          reject();
+        }
+      })
+    }
+    const deletePack = async () => {
+      try {
+        await implBeforeDelete();
+        await showDeleteConfirm();
+        await implDelete();
+        await implAfterDelete();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    deletePack();
+  }
+
+  const implBeforeDelete = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    });
+  }
+
+  const implDelete = () => {
+    return new Promise((resolve, reject) => {
+      vm.gridData.rows.splice(
+        vm.gridData.rows.findIndex(m => m.bookId == selectedKeyValue.current), 1
+      );
+      setFilterData([...vm.gridData.rows]);
+      syncVMValue("Grid", vm.gridData.rows, "rows");
+
+      resolve();
+      //reject("Yout Information!!");
+    });
+  }
+
+  const implAfterDelete = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    });
+  }
+
+  const initDetail = (operationId) => {
+
+    //點新增時、把selectedKeyValue清空
+    if (operationId == "Create") {
+      selectedKeyValue.current = "";
+    }
+
+    const initDetailPack = async (operationId) => {
+      try {
+        await implBeforeInitDetail(operationId);
+        await implLoadDetailData(operationId);
+        await implPreRenderDetail(operationId);
+      } catch (error) {
+        alert("系統發生錯誤");
+      }
+
+    }
+    initDetailPack(operationId);
+  }
+
+  const implBeforeInitDetail = (operationId) => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    });
+  }
+
+  const implLoadDetailData = (operationId) => {
+
+    return new Promise((resolve, reject) => {
+
+      //新增畫面預設值
+      if (operationId == "Create") {
+        const data = new Book();
+        data.bookBoughtDate = new Date().toISOString().substring(0, 10);
+        data.bookClassId = "internet";
+        syncVMValue("Create", data);
+      }
+      if (operationId == "Modify") {
+        const tempBook = vm.gridData.rows.find(m => m.bookId == selectedKeyValue.current);
+        const data = new Book();
+        data.bookId = selectedKeyValue;
+        data.bookName = tempBook.bookName;
+        data.bookAuthor = tempBook.bookAuthor;
+        data.bookClassId = tempBook.bookClassId;
+        data.bookBoughtDate = tempBook.bookBoughtDate;
+        data.bookPublisher = tempBook.bookPublisher;
+        syncVMValue("Modify", data);
+      }
+      resolve();
+      //reject("Yout Information!!");
+    });
+  }
+
+  const implPreRenderDetail = (operationId) => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    });
+  }
+
+  const save = (operationId) => {
+
+    if (pageState == "Detial4Create") {
+      insertData();
+    } else if (pageState = "Detial4Modify") {
+      updateData();
+    }
+  }
+
+  const insertData = () => {
+    const finishInsertData=()=>{
+      return new Promise((resolve, reject) => {
+        window.alert("新增成功");
+        resolve();
+      })
+    }
+    const insertDatalPack = async () => {
+      try {
+        await implBeforeInsertData();
+        await implInsertData();
+        await implAfterInsertData();
+        await finishInsertData();
+      } catch (error) {
+        debugger;
+        alert("系統發生錯誤");
+      }
+    }
+    insertDatalPack();
+
+  }
+
+  const implBeforeInsertData = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    })
+  }
+
+  const implInsertData = () => {
+    return new Promise((resolve, reject) => {
+
+      const temp = [];
+      const book = new Book();
+
+      book.bookId = Math.max(...vm.gridData.rows.map(m => m.BookId)) + 1;
+      book.bookName = vm.detialData.bookName;
+      book.bookAuthor = vm.detialData.bookAuthor;
+      book.bookClassId = vm.detialData.bookClassId;
+      book.bookClassName = bookClassData.find(m => m.value == vm.detialData.bookClassId).text;
+      book.bookBoughtDate = vm.detialData.bookBoughtDate;
+      book.bookPublisher = vm.detialData.bookPublisher
+
+      temp.push(book);
+
+      setFilterData([...temp, ...vm.gridData.rows]);
+      syncVMValue("Grid", vm.gridData.rows, "rows");
+
+      //新增成功後將畫面清空
+      syncVMValue("Default", new Book());
+      
+      resolve();
+      //reject("Yout Information!!");
+    })
+  }
+
+  const implAfterInsertData = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    })
+  }
+
+  const onFilter = () => {
+
+    const filterPack = async () => {
+      try {
+        await implBeforeFilter();
+        await implFilter();
+        await implAfterFilter();
+      } catch (error) {
+        alert("系統發生錯誤");
+      }
+    }
+    filterPack();
+  }
+
+  const implBeforeFilter = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    })
+  }
+
+  const implFilter = () => {
+    return new Promise((resolve, reject) => {
+      debugger;
+      const searchText = vm.filterArg.arg.bookName;
+      const filterResult = vm.gridData.rows.filter(m =>
+        m.bookId == searchText ||
+        m.bookName.includes(searchText) ||
+        m.bookClassName == searchText ||
+        m.bookBoughtDate == searchText ||
+        m.bookAuthor.includes(searchText) ||
+        searchText == ""
+      );
+      setFilterData(filterResult);
+      resolve();
+      //reject("Yout Information!!");
+    })
+  }
+
+  const onPageInit=()=>{
+    vm.filterArg.arg=new BookSearchArg();
+    
+    let temp = JSON.parse(localStorage.getItem("bookData"));
+    debugger;
+    if (!temp) {
+      temp = bookData;
+      localStorage.setItem("bookData", JSON.stringify(temp));
+    }
+
+    setFilterData(temp);
+    vm.gridData.rows=temp;
+    syncVMValue("Grid", temp, "rows")
+    
+    pageEventHandler(null,"Clear");
+  }
+
+  const implAfterFilter = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+      //reject("Yout Information!!");
+    })
+  }
+
+  // this.implBeforeUpdateData(),
+  // this.implUpdateData(),
+  // this.implAfterUpdateData(),
+  const updateData = () => {
+    const updateDataPack = async () => {
+      try {
+        await implBeforeUpdateData();
+        await implUpdateData();
+        await implAfterUpdateData();
+      } catch (error) {
+        alert("系統發生錯誤");
+      }
+    }
+    updateDataPack();
+  }
+
+  const implBeforeUpdateData = () => {
+    return new Promise((resolve, reject) => {
+      resolve();
+    })
+  }
+
+  const implUpdateData = () => {
+    return new Promise((resolve, reject) => {
+      const temp = [{
+        bookId: vm.detialData.bookId == "" ?
+          Math.max(...vm.gridData.rows.map(m => m.BookId)) + 1 :
+          vm.detialData.bookId,
+        bookName: vm.detialData.bookName,
+        bookAuthor: vm.detialData.bookAuthor,
+        bookClassId: vm.detialData.bookClassId,
+        bookClassName: bookClassData.find(m => m.value == vm.detialData.bookClassId).text,
+        bookBoughtDate: vm.detialData.bookBoughtDate,
+        bookPublisher: vm.detialData.bookPublisher
+      }];
+  
+      setFilterData([...temp, ...vm.gridData.rows]);
+      syncVMValue("Grid", vm.gridData.rows, "rows");
+  
+      //新增成功後將畫面清空
+      syncVMValue("Default", new Book());
+      alert("存檔成功");
+      resolve();
+    })
+  }
+
+  const implAfterUpdateData = () => {
+    return new Promise((resolve, reject) => {
+      
+      resolve();
+    })
+  }
+
+  const pageEventHandler = (e, operationId) => {
+    switch (operationId) {
+      case "Create"://新增
+        setPageState("Detial4Create");
+        initDetail(operationId);
+        break;
+      case "Filter"://查詢
+        setPageState("Result");
+        onFilter();
+        break;
+      case "Modify"://修改
+        setPageState("Detial4Modify");
+        initDetail(operationId);
+        break;
+      case "Delete"://刪除
+        debugger;
+        setPageState("Result");
+        deleteData();
+        break;
+      case "Save"://存檔
+        setPageState("Detial4Modify");
+        save(operationId);
+        break;
+      case "BackToPrevious"://回前頁
+        setPageState("Result");
+        break;
+      case "Clear":
+        setPageState("Result");
+        vm.filterArg.arg=new BookSearchArg();
+        onFilter();
+        break;
+      case "Init":
+        onPageInit();
+        break;
+      default:
+        break;
+    }
   }
 
   /**
    * 初始化頁面所需資料
    */
   useEffect(() => {
-    loadBookData();
+    //loadBookData();
+    onPageInit()
   }, [])
 
 
@@ -224,21 +500,88 @@ const BookMaintain = () => {
    * 當 Grid Data 更新時、處理 localStorage
    */
   useEffect(() => {
-    
     localStorage.setItem("bookData", JSON.stringify(vm.gridData.rows));
   }, [vm.gridData]);
 
 
-
   return (
     <div className="container-md">
+      <>
+        <span>{pageState}</span>
+        <div className="mb-3">
+          {
+            (operations).map(element => {
+              return <button key={"tr" + element.operationId} 
+                onClick={ (e)=>pageEventHandler(e,element.operationId)} 
+                className="btn btn-outline-primary mx-1">{element.operationName}</button>
+            })
+          }
+        </div>
+      </>
       {
-        pageState == "Insert" &&
+        pageState == "Result" &&
         (
-          <div data-anchor="Detail">
+          <>
+            {/* <div className="mb-3">
+              <button id="btn-show-add-book" className="btn btn-outline-primary mx-1"
+                onClick={(e) => pageEventHandler(e, "Create")}>新增</button>
+              <button className="btn btn-outline-primary mx-1"
+                onClick={(e) => { pageEventHandler(e, "Filter") }}>查詢</button>
+            </div> */}
+            <div className="mb-3">
+              <div className="row">
+                <div className="col">
+                  <input className="form-control" placeholder="請輸入查詢條件..." data-field="bookName" onChange={handleVMValueChange} value={vm.filterArg.arg.bookName || ""}></input>
+                </div>
+              </div>
+            </div>
+            <div id="book_grid" className="mb-3">
+              <table className="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <td style={{ textAlign: "center", width: "10%" }}>書籍編號</td>
+                    <td style={{ textAlign: "center", width: "35%" }}>書籍名稱</td>
+                    <td style={{ textAlign: "center", width: "15%" }}>書籍種類</td>
+                    <td style={{ textAlign: "center", width: "15%" }}>作者</td>
+                    <td style={{ textAlign: "center" }}>購買日期</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    (filterData != null ? filterData : vm.gridData.rows).map(element => {
+                      return (
+                        <tr key={"tr" + element.bookId} onClick={handleRowClick}>
+                          <td style={{ textAlign: "center" }}>{element.bookId}</td>
+                          <td>{element.bookName}</td>
+                          <td>{element.bookClassName}</td>
+                          <td>{element.bookAuthor}</td>
+                          <td style={{ textAlign: "center" }}>{element.bookBoughtDate}</td>
+                          <td style={{ textAlign: "center" }}>
+                            <a src="#" className="btn btn-outline-primary mx-1" onClick={(e) => pageEventHandler(e, "Modify")}>編輯</a>
+                            <a src="#" className="btn btn-outline-primary mx-1" onClick={(e) => pageEventHandler(e, "Delete")}>刪除</a>
+                            <input type="hidden" data-keyfield value={element.bookId} readOnly ></input>
+                          </td>
+                        </tr>);
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
+          </>
+        )
+      }
+      {
+        (pageState == "Detial4Create" || pageState == "Detial4Modify") &&
+        (
+          <>
+            <h4>
+              <span className="badge bg-primary">{pageState == "Detial4Create" ? "新增" : "修改"}</span>
+            </h4>
             <ul className="fieldlist">
               <li>
                 <img className="book-image" src="image/database.jpg" alt="" />
+                <input type="hidden" value={vm.detialData.bookId}></input>
               </li>
               <li>
                 <label>圖書類別</label>
@@ -266,62 +609,14 @@ const BookMaintain = () => {
                 <input id="bought_datepicker" className="form-control" type='date' title="datepicker" style={{ width: "100%" }} data-field="bookBoughtDate" onChange={handleVMValueChange} value={vm.detialData.bookBoughtDate || ""} />
               </li>
               <li className="uk-text-right">
-                <button className="btn btn-outline-primary" onClick={handleInsertBook}>新增</button>
-                <button className="btn btn-outline-primary" onClick={() => { setPageState("Query") }}>取消</button>
+                <button className="btn btn-outline-primary mx-1" onClick={(e) => { pageEventHandler(e, "Save") }}>存檔</button>
+                <button className="btn btn-outline-primary mx-1" onClick={(e) => { pageEventHandler(e, "BackToPrevious") }}>回上頁</button>
               </li>
             </ul>
-          </div>
-        )
-      }
-      {
-        pageState == "Query" &&
-        (
-          <>
-            <div data-anchor="Query">
-              <div className="mb-3">
-                <button id="btn-show-add-book" className="btn btn-outline-primary" onClick={handleShowBookForm}>新增書籍</button>
-              </div>
-              <div className="mb-3">
-                <input className="form-control" placeholder="請輸入查詢條件..." data-field="bookName" onChange={handleVMValueChange} onInput={handleFilter} value={vm.filterArg.bookName || ""}></input>
-              </div>
-            </div>
-            <div data-anchor="grid">
-              <div id="book_grid" className="mb-3">
-                <table className="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <td style={{ textAlign: "center", width: "10%" }}>書籍編號</td>
-                      <td style={{ textAlign: "center", width: "35%" }}>書籍名稱</td>
-                      <td style={{ textAlign: "center", width: "15%" }}>書籍種類</td>
-                      <td style={{ textAlign: "center", width: "15%" }}>作者</td>
-                      <td style={{ textAlign: "center" }}>購買日期</td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      (filterData != null ? filterData : vm.gridData.rows).map(element => {
-                        return (
-                          <tr key={"tr" + element.bookId}>
-                            <td style={{ textAlign: "center" }}>{element.bookId}</td>
-                            <td>{element.bookName}</td>
-                            <td>{element.bookClassName}</td>
-                            <td>{element.bookAuthor}</td>
-                            <td style={{ textAlign: "center" }}>{element.bookBoughtDate}</td>
-                            <td style={{ textAlign: "center" }}>
-                              <a src="#" className="btn btn-outline-primary mx-1" onClick={handleDelete}>刪除</a>
-                              <a src="#" className="btn btn-outline-primary mx-1" onClick={handleShowEdit}>編輯</a>
-                            </td>
-                          </tr>);
-                      })
-                    }
-                  </tbody>
-                </table>
-              </div>
-            </div>
           </>
         )
       }
+
     </div>
   )
 }

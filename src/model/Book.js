@@ -4,7 +4,7 @@ class Book{
         this.bookName="";
         this.bookAuthor="";
         this.bookClassId="database";
-        this.bookBoughtDate="2025-01-07";
+        this.bookBoughtDate="2025-01-22";
         this.bookPublisher="";
     }
 }

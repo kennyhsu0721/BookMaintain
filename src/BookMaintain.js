@@ -18,10 +18,50 @@ const BookMaintain = () => {
 
 
   const [filterData, setFilterData] = useState(null);
-  const [pageState, setPageState] = useState("Result");
-
+  //const [pageState, setPageState] = useState("Result");
+  
+  const [stateOperations,setStateOperations]=useState([]);
+  
   const selectedKeyValue = useRef("");
-
+  const pageState=useRef("");
+  const states = [
+    {
+      "StateId": "Browse",
+      "StateDescription": "初始",
+      "DisplayOperation": [
+        "Clear",
+        "Filter",
+        "Create"
+      ]
+    },
+    {
+      "StateId": "Result",
+      "StateDescription": "查詢",
+      "DisplayOperation": [
+        "Clear",
+        "Filter",
+        "Create"
+      ]
+    },
+    {
+      "StateId": "Detial4Create",
+      "StateDescription": "新增",
+      "DisplayOperation": [
+        "Save",
+        "BackToPrevious"
+      ]
+    },
+    {
+      "StateId": "Detial4Modify",
+      "StateDescription": "修改",
+      "DisplayOperation": [
+        "Save",
+        "BackToPrevious",
+        "Delete",
+        "Create"
+      ]
+    }
+  ];
   const operations = [
     {
       "operationId": "Filter",
@@ -50,6 +90,9 @@ const BookMaintain = () => {
     },
   ]
 
+
+
+
   /**
    * 處理使用者改變畫面資料
    * @param {*} e 
@@ -57,10 +100,10 @@ const BookMaintain = () => {
   const handleVMValueChange = (e) => {
     const value = e.target.value;
     const modelfield = e.target.dataset.field;
-    if (pageState == "Result") {
+    if (pageState.current == "Result") {
       syncVMValue("Filter", value, modelfield);
     }
-    if (pageState == "Detial4Create" || pageState == "Detial4Modify") {
+    if (pageState.pageState == "Detial4Create" || pageState.pageState == "Detial4Modify") {
       syncVMValue("Modify", value, modelfield);
     }
 
@@ -83,7 +126,7 @@ const BookMaintain = () => {
     const selectedRow = target.closest("tr");
     selectedKeyValue.current = selectedRow.querySelector("[data-keyfield]").value;
   }
- 
+
 
   /**
    * 更新頁面狀態
@@ -92,7 +135,7 @@ const BookMaintain = () => {
    * @param {*} modelfield 
    */
   const syncVMValue = (operationId, data, modelfield) => {
-    
+
     switch (operationId) {
       case "Create":
         setVMValue((prevvm) => ({
@@ -148,6 +191,19 @@ const BookMaintain = () => {
     }
   }
 
+  const setOperation=()=>{
+    debugger
+    let tempStateOperations=[];
+    states.forEach(element => {
+        if(element.StateId===pageState.current){
+          let tempOperations=element.DisplayOperation;
+          tempOperations.forEach(element => {
+            tempStateOperations.push(operations.find(m=>m.operationId==element))
+          });
+        }
+    });
+    setStateOperations(tempStateOperations);
+  }
   const deleteData = () => {
 
     const showDeleteConfirm = () => {
@@ -159,12 +215,20 @@ const BookMaintain = () => {
         }
       })
     }
+    const finishDelete = () => {
+      return new Promise((resolve, reject) => {
+        window.alert("刪除成功");
+        resolve();
+      })
+    }
+
     const deletePack = async () => {
       try {
         await implBeforeDelete();
         await showDeleteConfirm();
         await implDelete();
         await implAfterDelete();
+        await finishDelete()
       } catch (error) {
         console.log(error);
       }
@@ -262,15 +326,15 @@ const BookMaintain = () => {
 
   const save = (operationId) => {
 
-    if (pageState == "Detial4Create") {
+    if (pageState.current == "Detial4Create") {
       insertData();
-    } else if (pageState = "Detial4Modify") {
+    } else if (pageState.current = "Detial4Modify") {
       updateData();
     }
   }
 
   const insertData = () => {
-    const finishInsertData=()=>{
+    const finishInsertData = () => {
       return new Promise((resolve, reject) => {
         window.alert("新增成功");
         resolve();
@@ -288,7 +352,6 @@ const BookMaintain = () => {
       }
     }
     insertDatalPack();
-
   }
 
   const implBeforeInsertData = () => {
@@ -319,7 +382,7 @@ const BookMaintain = () => {
 
       //新增成功後將畫面清空
       syncVMValue("Default", new Book());
-      
+
       resolve();
       //reject("Yout Information!!");
     })
@@ -371,21 +434,22 @@ const BookMaintain = () => {
     })
   }
 
-  const onPageInit=()=>{
-    vm.filterArg.arg=new BookSearchArg();
-    
+  const onPageInit = () => {
+    vm.filterArg.arg = new BookSearchArg();
+
+    setOperation();
     let temp = JSON.parse(localStorage.getItem("bookData"));
-    debugger;
+    
     if (!temp) {
       temp = bookData;
       localStorage.setItem("bookData", JSON.stringify(temp));
     }
 
     setFilterData(temp);
-    vm.gridData.rows=temp;
+    vm.gridData.rows = temp;
     syncVMValue("Grid", temp, "rows")
-    
-    pageEventHandler(null,"Clear");
+
+    pageEventHandler(null, "Clear");
   }
 
   const implAfterFilter = () => {
@@ -395,15 +459,21 @@ const BookMaintain = () => {
     })
   }
 
-  // this.implBeforeUpdateData(),
-  // this.implUpdateData(),
-  // this.implAfterUpdateData(),
   const updateData = () => {
+
+    const finishupdateData = () => {
+      return new Promise((resolve, reject) => {
+        window.alert("修改成功");
+        resolve();
+      })
+    }
+
     const updateDataPack = async () => {
       try {
         await implBeforeUpdateData();
         await implUpdateData();
         await implAfterUpdateData();
+
       } catch (error) {
         alert("系統發生錯誤");
       }
@@ -430,20 +500,20 @@ const BookMaintain = () => {
         bookBoughtDate: vm.detialData.bookBoughtDate,
         bookPublisher: vm.detialData.bookPublisher
       }];
-  
+
       setFilterData([...temp, ...vm.gridData.rows]);
       syncVMValue("Grid", vm.gridData.rows, "rows");
-  
+
       //新增成功後將畫面清空
       syncVMValue("Default", new Book());
-      alert("存檔成功");
+      //alert("存檔成功");
       resolve();
     })
   }
 
   const implAfterUpdateData = () => {
     return new Promise((resolve, reject) => {
-      
+
       resolve();
     })
   }
@@ -451,35 +521,43 @@ const BookMaintain = () => {
   const pageEventHandler = (e, operationId) => {
     switch (operationId) {
       case "Create"://新增
-        setPageState("Detial4Create");
+        pageState.current="Detial4Create";
+        setOperation();
         initDetail(operationId);
         break;
       case "Filter"://查詢
-        setPageState("Result");
+        pageState.current="Result";
+        setOperation();
         onFilter();
         break;
       case "Modify"://修改
-        setPageState("Detial4Modify");
+        pageState.current="Detial4Modify";
         initDetail(operationId);
+        setOperation();
         break;
       case "Delete"://刪除
         debugger;
-        setPageState("Result");
+        pageState.current="Result";
         deleteData();
+        setOperation();
         break;
       case "Save"://存檔
-        setPageState("Detial4Modify");
+        pageState.current="Detial4Modify";
         save(operationId);
+        setOperation();
         break;
       case "BackToPrevious"://回前頁
-        setPageState("Result");
+        pageState.current="Result";
+        setOperation();
         break;
-      case "Clear":
-        setPageState("Result");
-        vm.filterArg.arg=new BookSearchArg();
+      case "Clear"://清畫面
+        pageState.current="Result";
+        
+        vm.filterArg.arg = new BookSearchArg();
         onFilter();
+        setOperation();
         break;
-      case "Init":
+      case "Init"://初始
         onPageInit();
         break;
       default:
@@ -507,19 +585,28 @@ const BookMaintain = () => {
   return (
     <div className="container-md">
       <>
-        <span>{pageState}</span>
-        <div className="mb-3">
-          {
-            (operations).map(element => {
-              return <button key={"tr" + element.operationId} 
-                onClick={ (e)=>pageEventHandler(e,element.operationId)} 
-                className="btn btn-outline-primary mx-1">{element.operationName}</button>
+        <span>{pageState.current}</span>
+        {/* <div>
+        {
+            (stateOperations).map(element=>{
+              return <span>{element}</span>
             })
           }
+        </div> */}
+        <div className="mb-3">
+          {
+            (stateOperations).map(element => {
+              return <button key={"tr" + element.operationId}
+                onClick={(e) => pageEventHandler(e, element.operationId)}
+                className="btn btn-outline-primary mx-1">{element.operationName}</button>
+            })
+
+          }
+          
         </div>
       </>
       {
-        pageState == "Result" &&
+        pageState.current == "Result" &&
         (
           <>
             {/* <div className="mb-3">
@@ -572,11 +659,11 @@ const BookMaintain = () => {
         )
       }
       {
-        (pageState == "Detial4Create" || pageState == "Detial4Modify") &&
+        (pageState.current == "Detial4Create" || pageState.current == "Detial4Modify") &&
         (
           <>
             <h4>
-              <span className="badge bg-primary">{pageState == "Detial4Create" ? "新增" : "修改"}</span>
+              <span className="badge bg-primary">{pageState.current == "Detial4Create" ? "新增" : "修改"}</span>
             </h4>
             <ul className="fieldlist">
               <li>
@@ -608,10 +695,10 @@ const BookMaintain = () => {
                 <label>購買日期</label>
                 <input id="bought_datepicker" className="form-control" type='date' title="datepicker" style={{ width: "100%" }} data-field="bookBoughtDate" onChange={handleVMValueChange} value={vm.detialData.bookBoughtDate || ""} />
               </li>
-              <li className="uk-text-right">
+              {/* <li className="uk-text-right">
                 <button className="btn btn-outline-primary mx-1" onClick={(e) => { pageEventHandler(e, "Save") }}>存檔</button>
                 <button className="btn btn-outline-primary mx-1" onClick={(e) => { pageEventHandler(e, "BackToPrevious") }}>回上頁</button>
-              </li>
+              </li> */}
             </ul>
           </>
         )

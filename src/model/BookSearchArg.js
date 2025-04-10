@@ -1,6 +1,6 @@
 class BookSearchArg{
     constructor(){
-        this.bookName="";
+        this.bookName="請輸入";
     }
 }
 
